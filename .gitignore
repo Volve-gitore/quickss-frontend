@@ -19,3 +19,8 @@ build/Release
 
 # dot env
 .env
+
+# expo
+.expo
+.expo-shared
+

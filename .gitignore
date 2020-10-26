@@ -13,8 +13,9 @@ package-lock.json
 # Compiled binary addons 
 build/Release
 
-# vscode live server
+# hidden folders
 .vscode
+.expo
 
 # dot env
 .env

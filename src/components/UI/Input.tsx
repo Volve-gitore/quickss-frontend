@@ -23,7 +23,7 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         borderBottomWidth: 2,
         borderBottomColor: COLORS.primary,
-        marginTop: 35,
+        marginTop: 25,
     },
     txtInput: {
         width: "80%",
@@ -31,7 +31,6 @@ const styles = StyleSheet.create({
         color: "#E5E5E5",
         fontSize: 20,
         lineHeight: 30,
-        letterSpacing: 4,
         paddingLeft: 15
 
     },

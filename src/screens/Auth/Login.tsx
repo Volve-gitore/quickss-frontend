@@ -11,12 +11,12 @@ import {
 } from "react-native";
 import { useDispatch } from "react-redux";
 import { Formik } from "formik";
-import COLORS from "../constants/colors";
-import Input from "../components/UI/Input";
-import SocialIcon from "../components/SocialIcon";
+import COLORS from "../../constants/colors";
+import Input from "../../components/UI/Input";
+import SocialIcon from "../../components/SocialIcon";
 
 import * as yup from "yup";
-import * as authAction from "../store/actions/auth";
+import * as authAction from "../../store/actions/auth";
 
 interface Props {
   navigation: {
@@ -70,11 +70,11 @@ const Login = (props: Props) => {
   };
 
   return (
-    <ScrollView>
-      <ImageBackground
-        style={{ flex: 1 }}
-        source={require("../assets/images/backImg_.jpg")}
-      >
+    <ImageBackground
+      style={{ flex: 1 }}
+      source={require("../../assets/images/backImg_.jpg")}
+    >
+      <ScrollView>
         <Formik
           initialValues={{ username: "", password: "" }}
           onSubmit={async (values, actions) => {
@@ -85,7 +85,7 @@ const Login = (props: Props) => {
             } catch (error) {
               setIsLoading(false);
               Alert.alert("Something went wrong!", `${error}`, [
-                { text: "OK" }
+                { text: "OK" },
               ]);
             }
             actions.setSubmitting(false);
@@ -102,9 +102,9 @@ const Login = (props: Props) => {
               {/* login form section */}
               <View style={styles.inputContainer}>
                 <Input
-                  iconName='md-person'
-                  autoCapitalize='none'
-                  placeholder='username'
+                  iconName="md-person"
+                  autoCapitalize="none"
+                  placeholder="username"
                   onChangeText={formikProps.handleChange("username")}
                   onBlur={formikProps.handleBlur("username")}
                   value={formikProps.values.username}
@@ -113,9 +113,9 @@ const Login = (props: Props) => {
                   }
                 />
                 <Input
-                  iconName='md-lock'
-                  placeholder='password'
-                  autoCapitalize='none'
+                  iconName="md-lock"
+                  placeholder="password"
+                  autoCapitalize="none"
                   secureTextEntry
                   onChangeText={formikProps.handleChange("password")}
                   onBlur={formikProps.handleBlur("password")}
@@ -138,7 +138,7 @@ const Login = (props: Props) => {
                   onPress={() => formikProps.handleSubmit()}
                 >
                   {isLoading ? (
-                    <ActivityIndicator size='large' />
+                    <ActivityIndicator size="large" />
                   ) : (
                     <Text>Login</Text>
                   )}
@@ -149,9 +149,9 @@ const Login = (props: Props) => {
 
                 {/* social login section */}
                 <View style={styles.socialIconsContainer}>
-                  <SocialIcon iconName='logo-google' color='#4285F4' />
-                  <SocialIcon iconName='logo-twitter' color='#1DA1F2' />
-                  <SocialIcon iconName='logo-instagram' color='#AE2764' />
+                  <SocialIcon iconName="logo-google" color="#4285F4" />
+                  <SocialIcon iconName="logo-twitter" color="#1DA1F2" />
+                  <SocialIcon iconName="logo-instagram" color="#AE2764" />
                 </View>
 
                 {/* signup section */}
@@ -169,8 +169,8 @@ const Login = (props: Props) => {
             </View>
           )}
         </Formik>
-      </ImageBackground>
-    </ScrollView>
+      </ScrollView>
+    </ImageBackground>
   );
 };
 

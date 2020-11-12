@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   ActivityIndicator,
-  Alert,
+  Alert
 } from "react-native";
 import { useDispatch } from "react-redux";
 import { Formik } from "formik";
@@ -49,8 +49,16 @@ interface User {
 }
 
 const loginSchema = yup.object().shape({
-  username: yup.string().required().min(3).max(15),
-  password: yup.string().required().min(8).max(30),
+  username: yup
+    .string()
+    .required()
+    .min(3)
+    .max(15),
+  password: yup
+    .string()
+    .required()
+    .min(8)
+    .max(30)
 });
 
 const Login = (props: Props) => {
@@ -73,11 +81,11 @@ const Login = (props: Props) => {
             try {
               setIsLoading(true);
               await handleLogin(values);
-              return props.navigation.replace("home");
+              return props.navigation.replace("Home");
             } catch (error) {
               setIsLoading(false);
               Alert.alert("Something went wrong!", `${error}`, [
-                { text: "OK" },
+                { text: "OK" }
               ]);
             }
             actions.setSubmitting(false);
@@ -94,9 +102,9 @@ const Login = (props: Props) => {
               {/* login form section */}
               <View style={styles.inputContainer}>
                 <Input
-                  iconName="md-person"
-                  autoCapitalize="none"
-                  placeholder="username"
+                  iconName='md-person'
+                  autoCapitalize='none'
+                  placeholder='username'
                   onChangeText={formikProps.handleChange("username")}
                   onBlur={formikProps.handleBlur("username")}
                   value={formikProps.values.username}
@@ -105,9 +113,9 @@ const Login = (props: Props) => {
                   }
                 />
                 <Input
-                  iconName="md-lock"
-                  placeholder="password"
-                  autoCapitalize="none"
+                  iconName='md-lock'
+                  placeholder='password'
+                  autoCapitalize='none'
                   secureTextEntry
                   onChangeText={formikProps.handleChange("password")}
                   onBlur={formikProps.handleBlur("password")}
@@ -130,7 +138,7 @@ const Login = (props: Props) => {
                   onPress={() => formikProps.handleSubmit()}
                 >
                   {isLoading ? (
-                    <ActivityIndicator size="large" />
+                    <ActivityIndicator size='large' />
                   ) : (
                     <Text>Login</Text>
                   )}
@@ -141,9 +149,9 @@ const Login = (props: Props) => {
 
                 {/* social login section */}
                 <View style={styles.socialIconsContainer}>
-                  <SocialIcon iconName="logo-google" color="#4285F4" />
-                  <SocialIcon iconName="logo-twitter" color="#1DA1F2" />
-                  <SocialIcon iconName="logo-instagram" color="#AE2764" />
+                  <SocialIcon iconName='logo-google' color='#4285F4' />
+                  <SocialIcon iconName='logo-twitter' color='#1DA1F2' />
+                  <SocialIcon iconName='logo-instagram' color='#AE2764' />
                 </View>
 
                 {/* signup section */}
@@ -174,37 +182,37 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-    height: 150,
+    height: 150
   },
   header: {
     fontWeight: "400",
     color: COLORS.primary,
     fontSize: 35,
     fontStyle: "normal",
-    letterSpacing: 4,
+    letterSpacing: 4
   },
   inputContainer: {
     width: "100%",
     alignItems: "center",
     padding: 10,
-    backgroundColor: "rgba(0, 0, 0, .7)",
+    backgroundColor: "rgba(0, 0, 0, .7)"
   },
   txtNormal: {
     fontSize: 16,
     color: "whitesmoke",
-    marginVertical: 15,
+    marginVertical: 15
   },
   socialIconsContainer: {
     width: "70%",
     flexDirection: "row",
     justifyContent: "space-evenly",
-    alignContent: "space-between",
+    alignContent: "space-between"
   },
 
   optionsContainer: {
     flex: 1,
     alignItems: "center",
-    height: 170,
+    height: 170
   },
   btnLogin: {
     width: "70%",
@@ -212,9 +220,9 @@ const styles = StyleSheet.create({
     height: 40,
     backgroundColor: COLORS.primary,
     justifyContent: "center",
-    alignItems: "center",
+    alignItems: "center"
   },
   signupBtnContainer: {
-    flexDirection: "row",
-  },
+    flexDirection: "row"
+  }
 });

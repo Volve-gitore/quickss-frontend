@@ -13,12 +13,16 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true
     },
     "web": {
       "favicon": "./src/assets/images/favicon.png"
-    }
+    },
+    "description": "Quickss App",
+    "githubUrl": "https://github.com/Volve-gitore/quickss-frontend.git"
   }
 }

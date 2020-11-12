@@ -1,5 +1,5 @@
 import API from "../../utils/api";
-import { AsyncStorage } from "react-native";
+import AsyncStorage from "@react-native-community/async-storage";
 export const AUTHENTICATE = "AUTHENTICATE";
 export const LOGOUT = "LOGOUT";
 
@@ -9,8 +9,8 @@ export const auntenticate = (token: string, user: any) => {
     payload: {
       token: token,
       user: user,
-      isLoggedIn: true,
-    },
+      isLoggedIn: true
+    }
   };
 };
 export const login = (username: string, password: string) => {
@@ -18,7 +18,7 @@ export const login = (username: string, password: string) => {
     try {
       const res = await API.post("/user/auth/signin", {
         username,
-        password,
+        password
       });
       if (res.error) throw new Error(res.error);
       const { token, user } = res;
@@ -27,7 +27,7 @@ export const login = (username: string, password: string) => {
         JSON.stringify({
           token,
           user,
-          isLoggedIn: true,
+          isLoggedIn: true
         })
       );
       dispatch(auntenticate(token, user));

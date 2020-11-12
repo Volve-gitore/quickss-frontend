@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { StyleSheet, View, ActivityIndicator} from "react-native";
+import { StyleSheet, View, ActivityIndicator } from "react-native";
 import AsyncStorage from "@react-native-community/async-storage";
 import COLORS from "../constants/colors";
 import { useDispatch } from "react-redux";
@@ -16,16 +16,18 @@ const AppLauncher = (props: {
         props.navigation.replace("login");
         return;
       }
+     
+
       const userData = JSON.parse(user);
       dispatch(auntenticate(userData.token, userData.user));
-      props.navigation.replace("home");
+      props.navigation.replace("Home");
       return;
     };
     autoLogin();
   }, [props.navigation]);
   return (
     <View style={styles.container}>
-      <ActivityIndicator size="large" color={COLORS.primary} />
+      <ActivityIndicator size='large' color={COLORS.primary} />
     </View>
   );
 };
@@ -37,6 +39,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center",
-  },
+    justifyContent: "center"
+  }
 });

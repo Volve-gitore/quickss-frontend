@@ -4,7 +4,8 @@ import { createStackNavigator } from "@react-navigation/stack";
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 import Home from "../screens/Home";
-import Login from "../screens/Login";
+import Login from "../screens/Auth/Login";
+import SignupScreen from "../screens/Auth/Signup";
 import HomeScreen from "../screens/Home";
 import AppLauncher from "../screens/AppLauncher";
 import "react-native-gesture-handler";
@@ -22,14 +23,14 @@ console.log("tokennnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn ", token);
 function LikeStack() {
   return (
     <Stack.Navigator
-      initialRouteName='Like'
+      initialRouteName="Like"
       screenOptions={{
         headerStyle: { backgroundColor: "#fff" },
         headerTintColor: "#fff",
-        headerTitleStyle: { fontWeight: "bold" }
+        headerTitleStyle: { fontWeight: "bold" },
       }}
     >
-      <Stack.Screen name='Like' component={Home} options={{ title: "Like" }} />
+      <Stack.Screen name="Like" component={Home} options={{ title: "Like" }} />
     </Stack.Navigator>
   );
 }
@@ -37,14 +38,14 @@ function LikeStack() {
 function HomeStack() {
   return (
     <Stack.Navigator
-      initialRouteName='Home'
+      initialRouteName="Home"
       screenOptions={{
         headerStyle: { backgroundColor: "#fff" },
         headerTintColor: "#fff",
-        headerTitleStyle: { fontWeight: "bold" }
+        headerTitleStyle: { fontWeight: "bold" },
       }}
     >
-      <Stack.Screen name='Home' component={Home} options={{ title: "Home" }} />
+      <Stack.Screen name="Home" component={Home} options={{ title: "Home" }} />
     </Stack.Navigator>
   );
 }
@@ -52,15 +53,15 @@ function HomeStack() {
 function SettingsStack() {
   return (
     <Stack.Navigator
-      initialRouteName='Settings'
+      initialRouteName="Settings"
       screenOptions={{
         headerStyle: { backgroundColor: "#fff" },
         headerTintColor: "#fff",
-        headerTitleStyle: { fontWeight: "bold" }
+        headerTitleStyle: { fontWeight: "bold" },
       }}
     >
       <Stack.Screen
-        name='Settings'
+        name="Settings"
         component={Home}
         options={{ title: "Setting" }}
       />
@@ -68,7 +69,7 @@ function SettingsStack() {
   );
 }
 const DrawerScreen = () => (
-  <Drawer.Navigator initialRouteName='Profile'>
+  <Drawer.Navigator initialRouteName="Profile">
     {/* <Drawer.Screen name="Home" component={TabsScreen} />
     <Drawer.Screen name="Profile" component={ProfileStackScreen} /> */}
   </Drawer.Navigator>
@@ -78,48 +79,48 @@ const Navigation = (props: { logout: () => void }) => {
     <NavigationContainer>
       {!token ? (
         <Tab.Navigator
-          initialRouteName='Feed'
+          initialRouteName="Feed"
           tabBarOptions={{
             showLabel: false,
-            activeTintColor: "#DB005B"
+            activeTintColor: "#DB005B",
           }}
         >
           <Tab.Screen
-            name='LikeStack'
+            name="LikeStack"
             component={LikeStack}
             options={{
               tabBarLabel: "Like",
               tabBarIcon: () => (
-                <MaterialCommunityIcons name='heart' color={"grey"} size={20} />
-              )
+                <MaterialCommunityIcons name="heart" color={"grey"} size={20} />
+              ),
             }}
           />
           <Tab.Screen
-            name='HomeStack'
+            name="HomeStack"
             component={HomeStack}
             options={{
               tabBarLabel: "Home",
               tabBarIcon: () => (
                 <MaterialCommunityIcons
-                  name='home'
+                  name="home"
                   color={"#DB005B"}
                   size={30}
                 />
-              )
+              ),
             }}
           />
           <Tab.Screen
-            name='SettingsStack'
+            name="SettingsStack"
             component={SettingsStack}
             options={{
               tabBarLabel: "Settings",
               tabBarIcon: () => (
                 <MaterialCommunityIcons
-                  name='settings'
+                  name="settings"
                   color={"grey"}
                   size={20}
                 />
-              )
+              ),
             }}
           />
         </Tab.Navigator>
@@ -127,21 +128,27 @@ const Navigation = (props: { logout: () => void }) => {
         <Stack.Navigator>
           <Stack.Screen
             options={{
-              headerShown: false
+              headerShown: false,
             }}
-            name='start'
+            name="start"
             component={AppLauncher}
           />
 
           <Stack.Screen
-            name='login'
+            name="login"
             options={{
-              headerShown: false
+              headerShown: false,
             }}
             component={Login}
           />
-          {/* <Stack.Screen name='signup' component={Signup} /> */}
-          <Stack.Screen name='Home' component={HomeStack} />
+          <Stack.Screen
+            options={{
+              headerShown: false,
+            }}
+            name="signup"
+            component={SignupScreen}
+          />
+          <Stack.Screen name="Home" component={HomeStack} />
         </Stack.Navigator>
       )}
     </NavigationContainer>

@@ -48,3 +48,27 @@ export const logout = () => {
     }
   };
 };
+
+export const signup = (userInfo: any) => {
+  return async (dispatch: (arg0: { type: string; payload: {} }) => void) => {
+    try {
+      const res = await API.post("/user/auth/signup", {
+        ...userInfo,
+      });
+      if (res.error) throw new Error(res.error);
+      const { token, user } = res;
+      await AsyncStorage.setItem(
+        "user",
+        JSON.stringify({
+          token,
+          user,
+          isLoggedIn: true,
+        })
+      );
+      dispatch(auntenticate(token, user));
+      return res;
+    } catch (error) {
+      throw error;
+    }
+  };
+};

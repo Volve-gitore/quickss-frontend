@@ -12,14 +12,12 @@ const AppLauncher = (props: {
   useEffect(() => {
     const autoLogin = async () => {
       const user = await AsyncStorage.getItem("user");
-      if (!user) {
-        props.navigation.replace("login");
+      if (user) {
+        const userData = JSON.parse(user);
+        dispatch(auntenticate(userData.token, userData.user));
+        props.navigation.replace("Home");
         return;
       }
-     
-
-      const userData = JSON.parse(user);
-      dispatch(auntenticate(userData.token, userData.user));
       props.navigation.replace("Home");
       return;
     };
@@ -27,7 +25,7 @@ const AppLauncher = (props: {
   }, [props.navigation]);
   return (
     <View style={styles.container}>
-      <ActivityIndicator size='large' color={COLORS.primary} />
+      <ActivityIndicator size="large" color={COLORS.primary} />
     </View>
   );
 };
@@ -39,6 +37,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center"
-  }
+    justifyContent: "center",
+  },
 });

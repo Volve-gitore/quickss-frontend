@@ -1,156 +1,170 @@
-import * as React from "react";
+import React from "react";
+import { Button } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
-import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
-import Home from "../screens/Home";
+import { useSelector, useDispatch } from "react-redux";
 import Login from "../screens/Auth/Login";
-import SignupScreen from "../screens/Auth/Signup";
-import HomeScreen from "../screens/Home";
-import AppLauncher from "../screens/AppLauncher";
 import "react-native-gesture-handler";
 import AsyncStorage from "@react-native-community/async-storage";
-import { createDrawerNavigator } from "@react-navigation/drawer";
+
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItemList,
+  DrawerItem,
+} from "@react-navigation/drawer";
 import { logout } from "../store/actions/auth";
+import BottomTab from "./BottomTab";
+import CustomHeaderButton from "../components/UI/HeaderButton";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import COLORS from "../constants/colors";
+import {
+  Ionicons,
+  MaterialCommunityIcons,
+  FontAwesome,
+} from "@expo/vector-icons";
+import Signup from "../screens/Auth/Signup";
+
+const defaultHeaderSettings = (navigation) => {
+  return {
+    headerLeft: () => {
+      return (
+        <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+          <Item
+            title="menu"
+            iconName="menu"
+            onPress={() => navigation.toggleDrawer()}
+          />
+        </HeaderButtons>
+      );
+    },
+  };
+};
+const defaultScreenOption = {
+  headerStyle: { backgroundColor: "#fff" },
+  headerTintColor: "#fff",
+  headerTitleStyle: { fontWeight: "bold" },
+};
 
 const Stack = createStackNavigator();
-const Tab = createBottomTabNavigator();
-const token = AsyncStorage.getItem("user");
-const Drawer = createDrawerNavigator();
-
-console.log("tokennnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn ", token);
-
-function LikeStack() {
+const AuthStack = () => {
   return (
     <Stack.Navigator
-      initialRouteName="Like"
       screenOptions={{
-        headerStyle: { backgroundColor: "#fff" },
-        headerTintColor: "#fff",
-        headerTitleStyle: { fontWeight: "bold" },
-      }}
-    >
-      <Stack.Screen name="Like" component={Home} options={{ title: "Like" }} />
-    </Stack.Navigator>
-  );
-}
-
-function HomeStack() {
-  return (
-    <Stack.Navigator
-      initialRouteName="Home"
-      screenOptions={{
-        headerStyle: { backgroundColor: "#fff" },
-        headerTintColor: "#fff",
-        headerTitleStyle: { fontWeight: "bold" },
-      }}
-    >
-      <Stack.Screen name="Home" component={Home} options={{ title: "Home" }} />
-    </Stack.Navigator>
-  );
-}
-
-function SettingsStack() {
-  return (
-    <Stack.Navigator
-      initialRouteName="Settings"
-      screenOptions={{
-        headerStyle: { backgroundColor: "#fff" },
-        headerTintColor: "#fff",
-        headerTitleStyle: { fontWeight: "bold" },
+        ...defaultScreenOption,
+        headerShown: false,
       }}
     >
       <Stack.Screen
-        name="Settings"
-        component={Home}
-        options={{ title: "Setting" }}
+        name="Login"
+        component={Login}
+        options={{ title: "Login", headerShown: false }}
+      />
+      <Stack.Screen
+        name="Signup"
+        component={Signup}
+        options={{ title: "Signup", headerShown: false }}
+      />
+      <Stack.Screen
+        name="Home"
+        component={BottomTab}
+        options={{ title: "Home", headerShown: false }}
       />
     </Stack.Navigator>
   );
-}
-const DrawerScreen = () => (
-  <Drawer.Navigator initialRouteName="Profile">
-    {/* <Drawer.Screen name="Home" component={TabsScreen} />
-    <Drawer.Screen name="Profile" component={ProfileStackScreen} /> */}
-  </Drawer.Navigator>
-);
-const Navigation = (props: { logout: () => void }) => {
+};
+
+const CustomDrawerContent = (props) => {
+  const userAuthenticated = useSelector((state) => state.auth.isLoggedIn);
+  const dispatch = useDispatch();
+  const handleLogout = async () => {
+    await dispatch(logout());
+  };
+  return (
+    <DrawerContentScrollView {...props}>
+      <DrawerItemList {...props} />
+      {userAuthenticated && (
+        <DrawerItem
+          icon={({ focused, color, size }) => (
+            <FontAwesome
+              color={color}
+              size={size}
+              name={focused ? "power-off" : "power-off"}
+            />
+          )}
+          label="Logout"
+          onPress={handleLogout}
+        />
+      )}
+    </DrawerContentScrollView>
+  );
+};
+
+const Drawer = createDrawerNavigator();
+const DrawerNavigation = (props) => {
+  const userAuthenticated = useSelector((state) => state.auth.isLoggedIn);
+
+  const config = defaultHeaderSettings(props.navigation);
+  return (
+    <Drawer.Navigator
+      drawerContentOptions={{
+        activeTintColor: COLORS.primary,
+        inactiveTintColor: "gray",
+      }}
+      drawerType="slide"
+      drawerContent={(props) => <CustomDrawerContent {...props} />}
+      drawerStyle={{
+        borderRadius: 30,
+        // padding: 40
+        height: "80%",
+        marginVertical: "5%",
+        // backgroundColor: "blue",
+      }}
+      overlayColor="transparent"
+      // minSwipeDistance={1}
+    >
+      <Drawer.Screen
+        options={() => ({
+          drawerIcon: ({ focused, color, size }) => {
+            return (
+              <Ionicons
+                name="ios-home"
+                size={size}
+                color={focused ? COLORS.primary : "#979797"}
+              />
+            );
+          },
+        })}
+        name="Home"
+        component={BottomTab}
+      />
+      {!userAuthenticated && (
+        <Drawer.Screen
+          options={{
+            title: "Login",
+            headerShown: false,
+            drawerIcon: ({ focused, color, size }) => {
+              return (
+                <MaterialCommunityIcons
+                  name="login"
+                  size={size}
+                  color={focused ? COLORS.primary : "#979797"}
+                />
+              );
+            },
+          }}
+          name="Auth"
+          component={AuthStack}
+        />
+      )}
+    </Drawer.Navigator>
+  );
+};
+
+const Navigation = (props) => {
   return (
     <NavigationContainer>
-      {!token ? (
-        <Tab.Navigator
-          initialRouteName="Feed"
-          tabBarOptions={{
-            showLabel: false,
-            activeTintColor: "#DB005B",
-          }}
-        >
-          <Tab.Screen
-            name="LikeStack"
-            component={LikeStack}
-            options={{
-              tabBarLabel: "Like",
-              tabBarIcon: () => (
-                <MaterialCommunityIcons name="heart" color={"grey"} size={20} />
-              ),
-            }}
-          />
-          <Tab.Screen
-            name="HomeStack"
-            component={HomeStack}
-            options={{
-              tabBarLabel: "Home",
-              tabBarIcon: () => (
-                <MaterialCommunityIcons
-                  name="home"
-                  color={"#DB005B"}
-                  size={30}
-                />
-              ),
-            }}
-          />
-          <Tab.Screen
-            name="SettingsStack"
-            component={SettingsStack}
-            options={{
-              tabBarLabel: "Settings",
-              tabBarIcon: () => (
-                <MaterialCommunityIcons
-                  name="settings"
-                  color={"grey"}
-                  size={20}
-                />
-              ),
-            }}
-          />
-        </Tab.Navigator>
-      ) : (
-        <Stack.Navigator>
-          <Stack.Screen
-            options={{
-              headerShown: false,
-            }}
-            name="start"
-            component={AppLauncher}
-          />
-
-          <Stack.Screen
-            name="login"
-            options={{
-              headerShown: false,
-            }}
-            component={Login}
-          />
-          <Stack.Screen
-            options={{
-              headerShown: false,
-            }}
-            name="signup"
-            component={SignupScreen}
-          />
-          <Stack.Screen name="Home" component={HomeStack} />
-        </Stack.Navigator>
-      )}
+      <DrawerNavigation />
     </NavigationContainer>
   );
 };

@@ -7,7 +7,7 @@ import ItemCard from "../components/ItemCard";
 const Home = (props: { navigation: { navigate: (arg0: string) => void } }) => {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const dispatch = useDispatch();
-  const restaurant = useSelector((state) => state.items.hotelResto);
+  const restaurant = useSelector(state => state.items.hotelResto);
 
   const loadProducts = useCallback(async () => {
     setIsRefreshing(true);
@@ -28,7 +28,7 @@ const Home = (props: { navigation: { navigate: (arg0: string) => void } }) => {
         style={styles.itemList}
         showsVerticalScrollIndicator={false}
         data={restaurant}
-        renderItem={(itemData) => <ItemCard item={itemData} />}
+        renderItem={itemData => <ItemCard item={itemData} />}
       />
     </View>
   );
@@ -36,13 +36,13 @@ const Home = (props: { navigation: { navigate: (arg0: string) => void } }) => {
 
 const styles = StyleSheet.create({
   screen: {
-    backgroundColor: "#F1F1F1",
+    backgroundColor: "#F1F1F1"
   },
   itemList: {
     paddingTop: 10,
     paddingHorizontal: 15,
-    height: "89%",
-  },
+    height: "89%"
+  }
 });
 
 export default Home;

@@ -1,7 +1,7 @@
-const BASE_URL = `http://192.168.43.57:3000/api`;
+const BASE_URL = `http://192.168.1.69:3000/api`;
 const HEADERS = {
   Accept: "application/json",
-  "Content-Type": "application/json",
+  "Content-Type": "application/json"
 };
 
 // A helper class to consume http requests
@@ -11,7 +11,7 @@ class API {
     const res = await fetch(`${BASE_URL + url}`, {
       method: "POST",
       headers: HEADERS,
-      body: JSON.stringify(payload),
+      body: JSON.stringify(payload)
     });
 
     const data = await res.json();
@@ -21,7 +21,7 @@ class API {
   static async get(url: string) {
     const res = await fetch(`${BASE_URL + url}`, {
       method: "GET",
-      headers: HEADERS,
+      headers: HEADERS
     });
     const data = await res.json();
     return data;

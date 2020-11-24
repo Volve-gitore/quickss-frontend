@@ -89,7 +89,7 @@ const Signup = (props: Props) => {
             try {
               setIsLoading(true);
               await handleSignup(values);
-              return props.navigation.replace("home");
+              return props.navigation.replace("Home");
             } catch (error) {
               setIsLoading(false);
               Alert.alert("Something went wrong!", `${error}`, [
@@ -184,7 +184,7 @@ const Signup = (props: Props) => {
                   <Text style={styles.txtNormal}>Have an account?</Text>
                   <Text
                     style={{ ...styles.txtNormal, color: COLORS.primary }}
-                    onPress={() => props.navigation.navigate("login")}
+                    onPress={() => props.navigation.navigate("Login")}
                   >
                     {" "}
                     Sign in

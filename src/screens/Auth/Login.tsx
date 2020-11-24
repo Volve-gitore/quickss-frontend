@@ -7,7 +7,7 @@ import {
   TouchableOpacity,
   ScrollView,
   ActivityIndicator,
-  Alert
+  Alert,
 } from "react-native";
 import { useDispatch } from "react-redux";
 import { Formik } from "formik";
@@ -49,16 +49,8 @@ interface User {
 }
 
 const loginSchema = yup.object().shape({
-  username: yup
-    .string()
-    .required()
-    .min(3)
-    .max(15),
-  password: yup
-    .string()
-    .required()
-    .min(8)
-    .max(30)
+  username: yup.string().required().min(3).max(15),
+  password: yup.string().required().min(8).max(30),
 });
 
 const Login = (props: Props) => {
@@ -159,7 +151,7 @@ const Login = (props: Props) => {
                   <Text style={styles.txtNormal}>Don't have an account?</Text>
                   <Text
                     style={{ ...styles.txtNormal, color: COLORS.primary }}
-                    onPress={() => props.navigation.navigate("signup")}
+                    onPress={() => props.navigation.navigate("Signup")}
                   >
                     {" "}
                     Sign up
@@ -182,37 +174,37 @@ const styles = StyleSheet.create({
     width: "100%",
     alignItems: "center",
     justifyContent: "center",
-    height: 150
+    height: 150,
   },
   header: {
     fontWeight: "400",
     color: COLORS.primary,
     fontSize: 35,
     fontStyle: "normal",
-    letterSpacing: 4
+    letterSpacing: 4,
   },
   inputContainer: {
     width: "100%",
     alignItems: "center",
     padding: 10,
-    backgroundColor: "rgba(0, 0, 0, .7)"
+    backgroundColor: "rgba(0, 0, 0, .7)",
   },
   txtNormal: {
     fontSize: 16,
     color: "whitesmoke",
-    marginVertical: 15
+    marginVertical: 15,
   },
   socialIconsContainer: {
     width: "70%",
     flexDirection: "row",
     justifyContent: "space-evenly",
-    alignContent: "space-between"
+    alignContent: "space-between",
   },
 
   optionsContainer: {
     flex: 1,
     alignItems: "center",
-    height: 170
+    height: 170,
   },
   btnLogin: {
     width: "70%",
@@ -220,9 +212,9 @@ const styles = StyleSheet.create({
     height: 40,
     backgroundColor: COLORS.primary,
     justifyContent: "center",
-    alignItems: "center"
+    alignItems: "center",
   },
   signupBtnContainer: {
-    flexDirection: "row"
-  }
+    flexDirection: "row",
+  },
 });

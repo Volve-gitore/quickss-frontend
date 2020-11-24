@@ -3,7 +3,7 @@ import { AUTHENTICATE, LOGOUT } from "../actions/auth";
 const initialState = {
   user: {},
   token: "",
-  isLoggedIn: false
+  isLoggedIn: false,
 };
 
 const authReducer = (
@@ -16,7 +16,8 @@ const authReducer = (
     case AUTHENTICATE:
       return {
         ...state,
-        user: { ...state.user, ...payload.user }
+        user: { ...state.user, ...payload.user },
+        isLoggedIn: payload.isLoggedIn,
       };
     case LOGOUT:
       return initialState;

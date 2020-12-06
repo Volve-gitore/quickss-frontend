@@ -6,18 +6,17 @@ import { FontAwesome5, AntDesign, Entypo } from "@expo/vector-icons";
 
 const ItemCard = (props: any) => {
   const { item } = props;
-
   return (
     <View style={styles.card}>
       <View>
         <Image
           style={styles.itemImg}
-          resizeMode="cover"
+          resizeMode='cover'
           source={{
             uri:
               item.item.images !== null
                 ? item.item.images[0]
-                : "http://res.cloudinary.com/ds5zmsm6d/image/upload/v1604843228/eqxhk2wiwmpvhkrwdx1r.jpg",
+                : "http://res.cloudinary.com/ds5zmsm6d/image/upload/v1604843228/eqxhk2wiwmpvhkrwdx1r.jpg"
           }}
         />
 
@@ -27,19 +26,19 @@ const ItemCard = (props: any) => {
               {item.item.name}
             </Text>
             <View style={styles.itemRatings}>
-              <AntDesign name="star" size={15} color="#FFB100" />
-              <AntDesign name="star" size={15} color="#FFB100" />
-              <AntDesign name="star" size={15} color="#FFB100" />
-              <AntDesign name="star" size={15} color="#FFB100" />
-              <AntDesign name="star" size={15} color="#FFB100" />
+              <AntDesign name='star' size={15} color='#FFB100' />
+              <AntDesign name='star' size={15} color='#FFB100' />
+              <AntDesign name='star' size={15} color='#FFB100' />
+              <AntDesign name='star' size={15} color='#FFB100' />
+              <AntDesign name='star' size={15} color='#FFB100' />
             </View>
 
             <View style={styles.locationContainer}>
               <Entypo
                 style={{ marginTop: 1 }}
-                name="location-pin"
+                name='location-pin'
                 size={17}
-                color="black"
+                color='black'
               />
               <Text numberOfLines={1} style={styles.itemLocation}>
                 {item.item.location}
@@ -50,7 +49,7 @@ const ItemCard = (props: any) => {
           <View style={styles.more}>
             <TouchableOpacity>
               <FontAwesome5
-                name="chevron-circle-right"
+                name='chevron-circle-right'
                 size={30}
                 color={COLORS.primary}
               />
@@ -76,7 +75,7 @@ const styles = StyleSheet.create({
     overflow: "hidden",
     marginBottom: "5%",
     marginHorizontal: "10%",
-    backgroundColor: "#fff",
+    backgroundColor: "#fff"
   },
   itemImg: {
     width: "90%",
@@ -84,37 +83,37 @@ const styles = StyleSheet.create({
     marginTop: "5%",
     marginHorizontal: "5%",
     justifyContent: "center",
-    borderRadius: 20,
+    borderRadius: 20
   },
   itemInfo: {
     flexDirection: "row",
     marginHorizontal: 20,
-    marginTop: 7,
+    marginTop: 7
   },
   itemName: {
     fontWeight: "bold",
-    textTransform: "uppercase",
+    textTransform: "uppercase"
   },
   itemRatings: {
     flexDirection: "row",
-    marginTop: 4,
+    marginTop: 4
   },
   locationContainer: {
     flexDirection: "row",
-    marginTop: 4,
+    marginTop: 4
   },
   itemLocation: {
     fontWeight: "bold",
     fontSize: 15,
-    fontStyle: "italic",
+    fontStyle: "italic"
   },
   more: {
     flex: 1,
     alignContent: "center",
     justifyContent: "center",
     alignItems: "flex-end",
-    flexDirection: "column",
-  },
+    flexDirection: "column"
+  }
 });
 
 export default ItemCard;

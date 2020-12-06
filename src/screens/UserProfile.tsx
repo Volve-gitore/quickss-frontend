@@ -2,10 +2,10 @@ import React from "react";
 import { StyleSheet, View, ActivityIndicator, Text } from "react-native";
 import COLORS from "../constants/colors";
 
-const UserProfileScreen = (props) => {
+const UserProfileScreen = props => {
   return (
     <View style={styles.container}>
-      <ActivityIndicator size="large" color={COLORS.primary} />
+      <ActivityIndicator size='large' color={COLORS.primary} />
       <Text>User profile screen</Text>
       <Text>Comming soon...</Text>
     </View>
@@ -19,6 +19,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",
-    justifyContent: "center",
-  },
+    justifyContent: "center"
+  }
 });

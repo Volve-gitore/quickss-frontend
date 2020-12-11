@@ -13,11 +13,11 @@ export const auntenticate = (token: string, user: any) => {
     },
   };
 };
-export const login = (username: string, password: string) => {
+export const login = (phoneNo: string, password: string) => {
   return async (dispatch: (arg0: { type: string; payload: {} }) => void) => {
     try {
       const res = await API.post("/user/auth/signin", {
-        username,
+        phoneNo,
         password,
       });
       if (res.error) throw new Error(res.error);

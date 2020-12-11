@@ -1,193 +1,148 @@
-import React, { useState } from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  ImageBackground,
-  TouchableOpacity,
-  ScrollView,
-  ActivityIndicator,
-  Alert,
-} from "react-native";
+import React, { useState, FC } from "react";
+import { StyleSheet, Text, View, ScrollView, Alert } from "react-native";
 import { useDispatch } from "react-redux";
 import { Formik } from "formik";
-import COLORS from "../../constants/colors";
-import Input from "../../components/UI/Input";
+import { IFormikProps, IProps, ICredentials } from "./types";
+import ActionButton from "../../components/UI/Buttons/ActionButtun";
+import TextButton from "../../components/UI/Buttons/TextButton";
+import TextField from "../../components/UI/Inputs/TextField";
 import SocialIcon from "../../components/SocialIcon";
-
 import * as yup from "yup";
 import * as authAction from "../../store/actions/auth";
 
-interface Props {
-  navigation: {
-    replace: (arg0: string) => void;
-    navigate: (arg0: string) => void;
-  };
-}
-
-interface FormikProps {
-  handleChange: (e: string | React.ChangeEvent<any>) => void;
-  handleBlur: (e: string | React.ChangeEvent<any>) => void;
-  values: {
-    username: string;
-    password: string;
-  };
-  touched: {
-    username?: boolean | undefined;
-    password?: boolean | undefined;
-  };
-  errors: {
-    username?: boolean | undefined;
-    password?: boolean | undefined;
-  };
-  handleSubmit: (e?: React.FormEvent<HTMLFormElement> | undefined) => void;
-}
-
-interface User {
-  username: string;
-  password: string;
-}
-
 const loginSchema = yup.object().shape({
-  username: yup.string().required().min(3).max(15),
-  password: yup.string().required().min(8).max(30),
+  phoneNo: yup
+    .string()
+    .required("phone number is required")
+    .min(9, "invalid phone number")
+    .max(15),
+  password: yup.string().required("password is required").min(8).max(30),
 });
 
-const Login = (props: Props) => {
+const Login: FC<IProps> = (props: IProps) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(true);
 
-  const handleLogin = async (user: User) => {
-    return await dispatch(authAction.login(user.username, user.password));
+  const handleLogin = async (user: ICredentials) => {
+    try {
+      setIsLoading(true);
+      await dispatch(authAction.login(user.phoneNo, user.password));
+      props.navigation.replace("Home");
+    } catch (error) {
+      setIsLoading(false);
+      Alert.alert("Something went wrong!", `${error}`, [{ text: "OK" }]);
+    }
   };
 
   return (
-    <ImageBackground
-      style={{ flex: 1 }}
-      source={require("../../assets/images/backImg_.jpg")}
-    >
-      <ScrollView>
-        <Formik
-          initialValues={{ username: "", password: "" }}
-          onSubmit={async (values, actions) => {
-            try {
-              setIsLoading(true);
-              await handleLogin(values);
-              return props.navigation.replace("Home");
-            } catch (error) {
-              setIsLoading(false);
-              Alert.alert("Something went wrong!", `${error}`, [
-                { text: "OK" },
-              ]);
-            }
-            actions.setSubmitting(false);
-          }}
-          validationSchema={loginSchema}
-        >
-          {(formikProps: FormikProps) => (
-            <View>
-              {/* app logo section */}
-              <View style={styles.headerContainer}>
-                <Text style={styles.header}>QuicKss</Text>
-              </View>
+    <ScrollView contentContainerStyle={styles.screen} scrollEnabled={false}>
+      {/* app logo */}
+      <View style={styles.logoContainer}>
+        <Text style={styles.logo}>Quickss</Text>
+      </View>
 
-              {/* login form section */}
-              <View style={styles.inputContainer}>
-                <Input
-                  iconName="md-person"
-                  autoCapitalize="none"
-                  placeholder="username"
-                  onChangeText={formikProps.handleChange("username")}
-                  onBlur={formikProps.handleBlur("username")}
-                  value={formikProps.values.username}
-                  error={
-                    formikProps.touched.username && formikProps.errors.username
-                  }
-                />
-                <Input
-                  iconName="md-lock"
-                  placeholder="password"
-                  autoCapitalize="none"
-                  secureTextEntry
-                  onChangeText={formikProps.handleChange("password")}
-                  onBlur={formikProps.handleBlur("password")}
-                  value={formikProps.values.password}
-                  error={
-                    formikProps.touched.password && formikProps.errors.password
-                  }
-                />
+      <Formik
+        initialValues={{ phoneNo: "", password: "" }}
+        onSubmit={(values, actions) => {
+          handleLogin(values);
+          actions.setSubmitting(false);
+        }}
+        validationSchema={loginSchema}
+      >
+        {(formikProps: IFormikProps) => (
+          <View style={styles.form}>
+            {/* login form */}
+            <TextField
+              onChangeFormattedText={(text: string) => {
+                formikProps.setFieldValue("phoneNo", text);
+              }}
+              type="phone"
+              label="Phone number"
+              onBlur={formikProps.handleBlur("phoneNo")}
+              value={formikProps.values.phoneNo.substring(4)}
+              error={formikProps.touched.phoneNo && formikProps.errors.phoneNo}
+            />
+            <TextField
+              label="Password"
+              type="password"
+              showPassword={showPassword}
+              onPasswordShow={() => setShowPassword(!showPassword)}
+              placeholder="Enter password"
+              onChangeText={formikProps.handleChange("password")}
+              onBlur={formikProps.handleBlur("password")}
+              value={formikProps.values.password}
+              error={
+                formikProps.touched.password && formikProps.errors.password
+              }
+            />
 
-                {/* forgot password section */}
-                <TouchableOpacity style={{ width: "70%" }}>
-                  <Text style={{ ...styles.txtNormal, textAlign: "right" }}>
-                    Forgot password?
-                  </Text>
-                </TouchableOpacity>
+            <ActionButton
+              isLoading={isLoading}
+              label={"Login"}
+              pressed={() => formikProps.handleSubmit()}
+            />
+          </View>
+        )}
+      </Formik>
 
-                {/* login button */}
-                <TouchableOpacity
-                  style={styles.btnLogin}
-                  onPress={() => formikProps.handleSubmit()}
-                >
-                  {isLoading ? (
-                    <ActivityIndicator size="large" />
-                  ) : (
-                    <Text>Login</Text>
-                  )}
-                </TouchableOpacity>
-              </View>
-              <View style={styles.optionsContainer}>
-                <Text style={styles.txtNormal}>or Login with</Text>
+      <View style={{ flex: 2 }}>
+        <View style={styles.links}>
+          <TextButton
+            text="Forgot password?"
+            pressed={() => console.log("pressed")}
+          />
 
-                {/* social login section */}
-                <View style={styles.socialIconsContainer}>
-                  <SocialIcon iconName="logo-google" color="#4285F4" />
-                  <SocialIcon iconName="logo-twitter" color="#1DA1F2" />
-                  <SocialIcon iconName="logo-instagram" color="#AE2764" />
-                </View>
+          <TextButton
+            text="Sign up"
+            pressed={() => props.navigation.navigate("Signup")}
+          />
+        </View>
 
-                {/* signup section */}
-                <View style={styles.signupBtnContainer}>
-                  <Text style={styles.txtNormal}>Don't have an account?</Text>
-                  <Text
-                    style={{ ...styles.txtNormal, color: COLORS.primary }}
-                    onPress={() => props.navigation.navigate("Signup")}
-                  >
-                    {" "}
-                    Sign up
-                  </Text>
-                </View>
-              </View>
-            </View>
-          )}
-        </Formik>
-      </ScrollView>
-    </ImageBackground>
+        <View style={styles.optionsContainer}>
+          <Text style={styles.txtNormal}>or Login with</Text>
+
+          <View style={styles.socialIconsContainer}>
+            <SocialIcon iconName="logo-google" />
+            <SocialIcon iconName="logo-twitter" />
+            <SocialIcon iconName="logo-instagram" />
+          </View>
+        </View>
+      </View>
+    </ScrollView>
   );
 };
 
 export default Login;
 
 const styles = StyleSheet.create({
-  headerContainer: {
+  screen: {
+    backgroundColor: "#D1305D",
     flex: 1,
-    width: "100%",
+  },
+  logoContainer: {
+    flex: 1.5,
     alignItems: "center",
     justifyContent: "center",
-    height: 150,
+    marginTop: 25,
   },
-  header: {
+  logo: {
     fontWeight: "400",
-    color: COLORS.primary,
+    color: "white",
     fontSize: 35,
-    fontStyle: "normal",
-    letterSpacing: 4,
   },
-  inputContainer: {
-    width: "100%",
+  form: {
+    flex: 2,
     alignItems: "center",
     padding: 10,
-    backgroundColor: "rgba(0, 0, 0, .7)",
+    marginBottom: 35,
+  },
+  links: {
+    flexDirection: "row",
+    justifyContent: "space-between",
+    alignSelf: "center",
+    paddingHorizontal: 10,
+    width: "90%",
   },
   txtNormal: {
     fontSize: 16,
@@ -195,26 +150,12 @@ const styles = StyleSheet.create({
     marginVertical: 15,
   },
   socialIconsContainer: {
-    width: "70%",
+    width: "80%",
     flexDirection: "row",
     justifyContent: "space-evenly",
     alignContent: "space-between",
   },
-
   optionsContainer: {
-    flex: 1,
     alignItems: "center",
-    height: 170,
-  },
-  btnLogin: {
-    width: "70%",
-    borderRadius: 45,
-    height: 40,
-    backgroundColor: COLORS.primary,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  signupBtnContainer: {
-    flexDirection: "row",
   },
 });

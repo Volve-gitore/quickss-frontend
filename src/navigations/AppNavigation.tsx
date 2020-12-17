@@ -1,29 +1,28 @@
 import React from "react";
-import { Button } from "react-native";
 import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import { useSelector, useDispatch } from "react-redux";
-import Login from "../screens/Auth/Login";
-import "react-native-gesture-handler";
-import AsyncStorage from "@react-native-community/async-storage";
-
 import {
   createDrawerNavigator,
   DrawerContentScrollView,
   DrawerItemList,
   DrawerItem,
 } from "@react-navigation/drawer";
-import { logout } from "../store/actions/auth";
-import BottomTab from "./BottomTab";
-import CustomHeaderButton from "../components/UI/HeaderButton";
-import { HeaderButtons, Item } from "react-navigation-header-buttons";
-import COLORS from "../constants/colors";
 import {
   Ionicons,
   MaterialCommunityIcons,
   FontAwesome,
 } from "@expo/vector-icons";
+import CustomHeaderButton from "../components/UI/Buttons/HeaderButton";
+import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import COLORS from "../constants/colors";
+import { logout } from "../store/actions/auth";
+
 import Signup from "../screens/Auth/Signup";
+import Login from "../screens/Auth/Login";
+import BottomTab from "./BottomTab";
+
+// import "react-native-gesture-handler";
 
 const defaultHeaderSettings = (navigation) => {
   return {

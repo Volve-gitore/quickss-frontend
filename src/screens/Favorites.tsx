@@ -1,24 +1,15 @@
 import React from "react";
-import { StyleSheet, View, ActivityIndicator, Text } from "react-native";
-import COLORS from "../constants/colors";
+import { StyleSheet, View, Text } from "react-native";
+import NotFound from "../components/NotFound";
 
-const FavoritesScreen = (props) => {
+const FavoritesScreen = () => {
   return (
-    <View style={styles.container}>
-      <ActivityIndicator size="large" color={COLORS.primary} />
-      <Text>Favorites screen</Text>
-      <Text>Comming soon...</Text>
+    <View>
+      <NotFound />
     </View>
   );
 };
 
 export default FavoritesScreen;
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});
+const styles = StyleSheet.create({});

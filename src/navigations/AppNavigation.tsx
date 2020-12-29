@@ -133,6 +133,7 @@ const DrawerNavigation = (props) => {
               />
             );
           },
+          headerShown: false
         })}
         name="Home"
         component={BottomTab}

@@ -9,14 +9,15 @@ import { Ionicons, FontAwesome } from "@expo/vector-icons";
 import COLORS from "../constants/colors";
 import Cart from "../screens/Cart";
 import Favorites from "../screens/Favorites";
+import Menu from "../screens/Menu/Menu";
 
 import UserProfile from "../screens/UserProfile";
 const Stack = createStackNavigator();
 const Tab = createBottomTabNavigator();
 
 const defaultScreenOption = {
-  headerStyle: { backgroundColor: "#fff" },
-  headerTintColor: "#fff",
+  headerStyle: { backgroundColor: "red" },
+  headerTintColor: "red",
   headerTitleStyle: { fontWeight: "bold" },
   headerShown: false,
 };
@@ -33,7 +34,7 @@ const HomeStack = () => {
     <Stack.Navigator
       screenOptions={{
         ...defaultScreenOption,
-      }}
+       }}
     >
       <Stack.Screen
         name="Start"
@@ -44,6 +45,11 @@ const HomeStack = () => {
         name="Home"
         component={Home}
         options={{ title: "Home", headerShown: false }}
+      />
+      <Stack.Screen
+        name="Menu"
+        component={Menu}
+        options={{ title: "Menu", headerShown: false }}
       />
     </Stack.Navigator>
   );
@@ -82,6 +88,7 @@ const BottomTab = (props) => {
           name="home"
           component={HomeStack}
           options={{
+          
             tabBarLabel: "Home",
             tabBarIcon: ({ focused, color, size }) => (
               <Ionicons
@@ -90,6 +97,7 @@ const BottomTab = (props) => {
                 size={22}
               />
             ),
+
           }}
         />
         <Tab.Screen

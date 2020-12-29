@@ -38,7 +38,7 @@ const Home = (props: { navigation: { navigate: (arg0: string) => void } }) => {
     <View style={styles.screen}>
       {hotelResto !== undefined ? (
         <>
-          <SafeAreaView style={styles.container}>
+          <SafeAreaView>
             <TextInput
               style={styles.textInputStyle}
               onChangeText={onChangeSearch}
@@ -55,7 +55,7 @@ const Home = (props: { navigation: { navigate: (arg0: string) => void } }) => {
             style={styles.itemList}
             showsVerticalScrollIndicator={false}
             data={filteredHotelResto}
-            renderItem={(itemData) => <ItemCard item={itemData} />}
+            renderItem={(itemData) => <ItemCard {...props} item={itemData} />}
           />
         </>
       ) : (
@@ -74,13 +74,6 @@ const styles = StyleSheet.create({
     paddingHorizontal: 10,
     height: "89%",
   },
-  container: {
-    justifyContent: "center",
-    marginLeft: "10%",
-    width: "80%",
-    marginTop: "2%",
-    borderRadius: 20,
-  },
   itemStyle: {
     padding: 10,
   },
@@ -91,6 +84,9 @@ const styles = StyleSheet.create({
     backgroundColor: "#FFFFFF",
     justifyContent: "center",
     borderRadius: 20,
+    marginLeft: "10%",
+    width: "80%",
+    marginTop: "2%",
   },
 });
 

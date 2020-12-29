@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import NotFound from "../components/NotFound";
 
-const FavoritesScreen = () => {
+const Favorites = () => {
   return (
     <View>
       <NotFound />
@@ -10,6 +10,6 @@ const FavoritesScreen = () => {
   );
 };
 
-export default FavoritesScreen;
+export default Favorites;
 
 const styles = StyleSheet.create({});

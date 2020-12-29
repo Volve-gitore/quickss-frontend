@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, View, Text } from "react-native";
 import NotFound from "../components/NotFound";
 
-const UserProfileScreen = () => {
+const UserProfile = () => {
   return (
     <View>
       <NotFound />
@@ -10,6 +10,6 @@ const UserProfileScreen = () => {
   );
 };
 
-export default UserProfileScreen;
+export default UserProfile;
 
 const styles = StyleSheet.create({});

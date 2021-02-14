@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
-import COLORS from "../constants/colors";
+import COLORS from "../../constants/colors";
 
 import { AntDesign, Entypo } from "@expo/vector-icons";
 

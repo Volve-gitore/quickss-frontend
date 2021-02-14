@@ -7,13 +7,13 @@ import {
   ImageBackground,
   Text,
 } from "react-native";
-import MenuCard from "../../components/MenuCard";
+import MenuCard from "../../components/Cards/MenuCard";
 import { Fontisto } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 import { Entypo } from "@expo/vector-icons";
 import SmallButton from "../../components/UI/Buttons/Button";
 
-const Menu = () => {
+const Menu = (props: { navigation: any }) => {
   const [activeType, setActiveType] = useState("food");
   const list = [
     {
@@ -110,10 +110,12 @@ const Menu = () => {
           </View>
         </View>
         <FlatList
-          keyExtractor={(item, index) => index.toString()}
+          keyExtractor={(item, index) => item.name}
           showsVerticalScrollIndicator={false}
           data={list}
-          renderItem={(itemData) => <MenuCard item={itemData} />}
+          renderItem={(itemData) => (
+            <MenuCard key={itemData.item.name} item={itemData} navigation={props.navigation} />
+          )}
         />
       </View>
     </View>
@@ -127,13 +129,13 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   topBox: {
-    flex: 1.7,
-    backgroundColor: "#ccc",
+    flex: 2,
+    // backgroundColor: "#ccc",
     justifyContent: "center",
     alignContent: "center",
   },
   info: {
-    paddingTop: 17,
+    paddingTop: 16,
     marginHorizontal: 20,
   },
   header: {
@@ -141,7 +143,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   title: {
-    fontSize: 20,
+    fontSize: 16,
     fontWeight: "700",
     textTransform: "uppercase",
     color: "#5D5D5D",
@@ -152,15 +154,16 @@ const styles = StyleSheet.create({
   },
   spec: {
     color: "#5D5D5D",
-    marginLeft: 5,
+    margin: 3,
+    fontSize: 12
   },
   menuBox: {
     flex: 3.7,
     marginBottom: 40,
-    marginTop: -50,
+    marginTop: -30,
     borderTopRightRadius: 40,
     borderTopLeftRadius: 40,
-    backgroundColor: "#F9F9F9"
+    backgroundColor: "#F9F9F9",
   },
   input: {
     width: "80%",

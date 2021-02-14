@@ -133,16 +133,17 @@ const Signup: FC<IProps> = (props: IProps) => {
       </Formik>
       <View style={{ flex: 1 }}>
         <View style={styles.links}>
-          <TextButton
-            text="Have an account?"
-            pressed={() => console.log("pressed")}
+        <TextButton
+            text="Back Home"
+            pressed={() => props.navigation.goBack()}
           />
 
           <TextButton
             text="Sign in"
-            pressed={() => props.navigation.navigate("Login")}
+            pressed={() => props.navigation.navigate("SignIn")}
           />
         </View>
+        
       </View>
     </ScrollView>
   );

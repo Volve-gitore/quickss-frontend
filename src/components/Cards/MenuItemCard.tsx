@@ -1,12 +1,12 @@
 import React, { useEffect } from "react";
 import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
-import COLORS from "../constants/colors";
+import COLORS from "../../constants/colors";
 
 import { FontAwesome5, AntDesign, Entypo } from "@expo/vector-icons";
 
-const MenuCard = (props: any) => {
+const MenuItemCard = (props: any) => {
   const { item } = props.item;
- 
+
   return (
     <TouchableOpacity style={styles.card}>
       <View style={styles.imgBox}>
@@ -23,38 +23,21 @@ const MenuCard = (props: any) => {
         <Text numberOfLines={1} style={styles.title}>
           {item.name}
         </Text>
-        <View style={styles.ingredients}>
-          <Text style={styles.txtMini}>Ingredient:</Text>
-          {item.ingredients &&
-            item.ingredients.map((ingredient: string, index: number) => (
-              <Text key={index} numberOfLines={1} style={styles.txtMini}>
-                {ingredient},
-              </Text>
-            ))}
-        </View>
-        <View style={styles.groups}>
-          {item.groups &&
-            item.groups.map((group: string, i: number) => (
-              <View style={styles.group}>
-                  <Text key={i} numberOfLines={1} >
-                {group}
-              </Text>
-              </View>
-            
-            ))}
-        </View>
+        <Text numberOfLines={1} style={styles.subTitle}>
+          {item.groups[0]}
+        </Text>
         <Text style={styles.price}>{item.price}</Text>
       </View>
     </TouchableOpacity>
   );
 };
-export default MenuCard;
+export default MenuItemCard;
 
 const styles = StyleSheet.create({
   card: {
     flex: 1,
     flexDirection: "row",
-    height: 120,
+    // height: 50,
     elevation: 10,
     shadowColor: "#000000",
     shadowOffset: { height: 7, width: 1 },
@@ -63,10 +46,10 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginBottom: "5%",
     marginHorizontal: "5%",
-    backgroundColor: "#fff",
+    backgroundColor: "#EFEFEF",
   },
   imgBox: {
-    flex: 2,
+    flex: 1.3,
   },
   details: {
     flex: 3,
@@ -79,26 +62,11 @@ const styles = StyleSheet.create({
     textTransform: "capitalize",
     fontSize: 20,
   },
-  ingredients: {
-    flex: 1,
-    flexDirection: "row",
-    overflow: "hidden",
-  },
-  groups: {
-    flex: 1,
-    flexDirection: "row",
-    overflow: "hidden",
-  },
-  group: {
-    fontWeight: "500",
-    paddingVertical: 3,
-    paddingHorizontal: 7,
-    color: "#C2C2C2",
+  subTitle: {
     textTransform: "capitalize",
-    borderRadius: 90,
-    marginRight: 10,
-    backgroundColor: "#eee",
+    fontSize: 12,
   },
+
   price: {
     flex: 1,
     textAlign: "right",
@@ -113,14 +81,4 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     borderRadius: 10,
   },
-
-  txtMini: {
-    fontSize: 14,
-    fontWeight: "500",
-    paddingRight: 5,
-    paddingTop: 3,
-    color: "#C2C2C2",
-    textTransform: "capitalize",
-  },
 });
-

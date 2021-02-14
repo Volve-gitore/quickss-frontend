@@ -1,5 +1,12 @@
 import React, { useState, FC } from "react";
-import { StyleSheet, Text, View, ScrollView, Alert } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  Alert,
+  Button,
+} from "react-native";
 import { useDispatch } from "react-redux";
 import { Formik } from "formik";
 import { IFormikProps, IProps, ICredentials } from "./types";
@@ -9,6 +16,7 @@ import TextField from "../../components/UI/Inputs/TextField";
 import SocialIcon from "../../components/SocialIcon";
 import * as yup from "yup";
 import * as authAction from "../../store/actions/auth";
+// import { Button } from "native-base";
 
 const loginSchema = yup.object().shape({
   phoneNo: yup
@@ -19,7 +27,7 @@ const loginSchema = yup.object().shape({
   password: yup.string().required("password is required").min(8).max(30),
 });
 
-const Login: FC<IProps> = (props: IProps) => {
+const Login = (props) => {
   const dispatch = useDispatch();
   const [isLoading, setIsLoading] = useState(false);
   const [showPassword, setShowPassword] = useState(true);
@@ -29,6 +37,7 @@ const Login: FC<IProps> = (props: IProps) => {
       setIsLoading(true);
       await dispatch(authAction.login(user.phoneNo, user.password));
       props.navigation.replace("Home");
+      setIsLoading(false);
     } catch (error) {
       setIsLoading(false);
       Alert.alert("Something went wrong!", `${error}`, [{ text: "OK" }]);
@@ -95,7 +104,7 @@ const Login: FC<IProps> = (props: IProps) => {
 
           <TextButton
             text="Sign up"
-            pressed={() => props.navigation.navigate("Signup")}
+            pressed={() => props.navigation.navigate("SignUp")}
           />
         </View>
 
@@ -107,6 +116,10 @@ const Login: FC<IProps> = (props: IProps) => {
             <SocialIcon iconName="logo-twitter" />
             <SocialIcon iconName="logo-instagram" />
           </View>
+          <TextButton
+            text="Back Home"
+            pressed={() => props.navigation.goBack()}
+          />
         </View>
       </View>
     </ScrollView>

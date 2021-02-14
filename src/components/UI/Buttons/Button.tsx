@@ -8,7 +8,6 @@ const SmallButton = (props: {
   active: boolean;
 }) => {
   const { label, pressed, active } = props;
-  console.log(active);
 
   return (
     <TouchableOpacity
@@ -44,7 +43,7 @@ const styles = StyleSheet.create({
   btnText: {
     fontSize: 14,
     fontWeight: "700",
-    textTransform: "lowercase",
+    textTransform: "capitalize",
     color: COLORS.primary,
   },
 });

@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { viewHotelResto } from "../store/actions/hotelResto";
-import ItemCard from "../components/ItemCard";
+import ItemCard from "../components/Cards/ItemCard";
 import { SearchBar } from "react-native-elements";
 import NotFound from "../components/NotFound";
 
@@ -18,7 +18,7 @@ const Home = (props: { navigation: { navigate: (arg0: string) => void } }) => {
   const dispatch = useDispatch();
   const hotelResto = useSelector((state) => state.items.hotelResto);
 
-  const loadProducts = useCallback(async () => {
+  const loadProducts = useCallback(async () => {    
     setIsRefreshing(true);
     await dispatch(viewHotelResto());
     setIsRefreshing(false);
@@ -26,7 +26,7 @@ const Home = (props: { navigation: { navigate: (arg0: string) => void } }) => {
 
   useEffect(() => {
     loadProducts();
-  }, [loadProducts]);
+  }, []);
 
   const [searchQuery, setSearchQuery] = React.useState("");
   const onChangeSearch = (query: any) => setSearchQuery(query);
@@ -67,7 +67,9 @@ const Home = (props: { navigation: { navigate: (arg0: string) => void } }) => {
 
 const styles = StyleSheet.create({
   screen: {
-    backgroundColor: "#F8F8F8",
+    backgroundColor: "#eee",
+    paddingTop: 35,
+    paddingBottom: 35
   },
   itemList: {
     paddingTop: 10,
@@ -80,12 +82,12 @@ const styles = StyleSheet.create({
   textInputStyle: {
     height: 40,
     paddingLeft: 20,
-    margin: 5,
+    // margin: 5,
     backgroundColor: "#FFFFFF",
     justifyContent: "center",
     borderRadius: 20,
-    marginLeft: "10%",
-    width: "80%",
+    marginLeft: "15%",
+    width: "70%",
     marginTop: "2%",
   },
 });

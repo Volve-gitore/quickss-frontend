@@ -1,4 +1,4 @@
-const BASE_URL = `http://192.168.1.65:3000/api`;
+const BASE_URL = `https://quickss-backend.herokuapp.com/api`;
 const HEADERS = {
   Accept: "application/json",
   "Content-Type": "application/json"

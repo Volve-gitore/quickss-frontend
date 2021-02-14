@@ -1,12 +1,20 @@
 import React from "react";
-import { StyleSheet, View, Text } from "react-native";
-import NotFound from "../components/NotFound";
+import { StyleSheet, View, Text, Button, SafeAreaView } from "react-native";
+import { useDispatch } from "react-redux";
+import AuthStack from "../navigations/Stack/AuthStack";
+import Cart from "../screens/Cart";
+import { logout } from "../store/actions/auth";
 
-const UserProfile = () => {
+const UserProfile = (props) => {
+  const dispatch = useDispatch();
+  const handleLogout = () => {
+    dispatch(logout());
+    return props.navigation.navigate("Home");
+  };
   return (
-    <View>
-      <NotFound />
-    </View>
+    <SafeAreaView>
+      <Button title="Logout" color="grey" onPress={handleLogout} />
+    </SafeAreaView>
   );
 };
 
